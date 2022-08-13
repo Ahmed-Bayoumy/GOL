@@ -56,7 +56,7 @@ class shape:
     y = x = np.linspace(self.al+self.l/2., self.au-self.l/2., self.ny)
     self.X, self.Y = np.meshgrid(x, y)
     # self.generate_samples()
-    self.state = np.random.choice([0,1], size=(self.nx, self.ny), p=[.5, 0.5])
+    self.state = np.random.choice([0,1], size=(self.nx, self.ny), p=[.3, 0.7])
     self.newState = copy.deepcopy(self.state)
   
   def update_figure(self):
