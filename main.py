@@ -11,14 +11,15 @@ class shape:
   l: float = 1.
   cx: float = 0.0
   cy: float = 0.0
-  nx: int = 101
-  ny: int = 401
+  nx: int = 100
+  ny: int = 100
   ax: Any = None
   ps: np.ndarray = None 
   ns: int = 10
   al: float = -50.
   au: float=50.
   state: np.ndarray = None
+  newState: np.ndarray = None
   X: np.ndarray = None
   Y: np.ndarray = None
   
@@ -55,8 +56,8 @@ class shape:
     y = x = np.linspace(self.al+self.l/2., self.au-self.l/2., self.ny)
     self.X, self.Y = np.meshgrid(x, y)
     # self.generate_samples()
-    self.state = np.eye(self.nx, self.ny)
-    self.state = np.random.choice([0,1], size=(self.nx, self.ny), p=[.95, 0.05])
+    self.state = np.random.choice([0,1], size=(self.nx, self.ny), p=[.5, 0.5])
+    self.newState = copy.deepcopy(self.state)
   
   def update_figure(self):
     img = np.zeros((self.nx, self.ny), dtype=float)
@@ -100,12 +101,13 @@ class shape:
         n_live: int = a + b + c + d + e + f + g + h
         if self.state[i, j] == 1:
           if n_live <= 1 or n_live >= 4:
-            self.state[i, j] = 0
+            self.newState[i, j] = 0
         else:
           if n_live == 3:
-            self.state[i, j] = 1
+            self.newState[i, j] = 1
+    self.state = copy.deepcopy(self.newState)
     self.ax.cla()
-    self.ax.imshow(self.state, cmap=color_map, interpolation='none')
+    self.ax.imshow(self.newState, cmap=color_map, interpolation='none')
     self.ax.draw
     plt.pause(0.001)
 
