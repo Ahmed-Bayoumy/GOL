@@ -11,8 +11,8 @@ class shape:
   l: float = 1.
   cx: float = 0.0
   cy: float = 0.0
-  nx: int = 100
-  ny: int = 100
+  nx: int = 150
+  ny: int = 150
   ax: Any = None
   ps: np.ndarray = None 
   ns: int = 10
@@ -28,6 +28,8 @@ class shape:
     self.ax = fig.add_subplot(1, 1, 1)
     self.ax.set_xlim(0, self.nx, 1.)
     self.ax.set_ylim(0, self.ny, 1.)
+    self.ax.set(facecolor = "black")
+
     # And a corresponding grid
     self.ax.grid(which='both')
     # Or if you want different settings for the grids:
@@ -61,7 +63,7 @@ class shape:
   
   def update_figure(self):
     img = np.zeros((self.nx, self.ny), dtype=float)
-    color_map = mlc.LinearSegmentedColormap.from_list('ColorMap', [(1.000, 1.000, 1.000), (0.0, 0.0, 0.0)])
+    color_map = mlc.LinearSegmentedColormap.from_list('ColorMap', [(0.000, 0.000, 0.000), (0.0, 128.0, 0.0)])
     self.ax.imshow(self.state, cmap=color_map, interpolation='none')
     plt.pause(0.001)
     for i in range(self.nx):
